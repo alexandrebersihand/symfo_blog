@@ -26,6 +26,10 @@ class ArticleController extends AbstractController
     {
         $article = $repository->find($id);
 
+        if(!$article)
+        {
+            throw $this->createNotFoundException('Article inexistant !');
+        }
         return $this->render('article/show.html.twig', [
             'article' => $article,
         ]);
