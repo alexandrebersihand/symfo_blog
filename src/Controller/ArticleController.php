@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Article;
 use App\Repository\ArticleRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,14 +24,8 @@ class ArticleController extends AbstractController
     /**
      * @Route("/{id}", requirements={"id":"\d+"}, methods={"GET"})
      */
-    public function show(string $id, ArticleRepository $repository)
+    public function show(Article $article)
     {
-        $article = $repository->find($id);
-
-        if(!$article)
-        {
-            throw $this->createNotFoundException('Article inexistant !');
-        }
         return $this->render('article/show.html.twig', [
             'article' => $article,
         ]);
