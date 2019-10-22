@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ article.title | upper}}</h1>
+    <p>Ecrit le {{ article.publishedAt | date ('d//m/Y à H:i:s') }}</p>
+    <div>
+        {{ article.content| nl2br }}
+    </div>
+{% endblock %}
+
+{% block title %}
+    {{ article.title }}
+{% endblock %}
+
