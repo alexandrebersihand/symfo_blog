@@ -62,6 +62,8 @@ class ArticleController extends AbstractController
             $em->persist($article);
             $em->flush();
 
+            $this->addFlash('success', 'le nouvel article a bien été créé');
+
             return $this->redirectToRoute('app_article_show', [
                 'id' => $article->getId(),
             ]);
