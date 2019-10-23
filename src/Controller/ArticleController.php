@@ -40,7 +40,9 @@ class ArticleController extends AbstractController
     public function new(Request $request)
     {
         $article = new Article();
-        $form = $this->createFormBuilder($article)
+        $form = $this->createFormBuilder($article, [
+            'validation_groups' => ['new', 'Default']
+        ])
             ->add('title', null, [
                 'label' => 'Titre'
             ])
@@ -69,9 +71,43 @@ class ArticleController extends AbstractController
             ]);
     }
 
-
         return $this->render('article/new.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route ("/{id}/edit",
+     *     requirements={"id": "\d+"},
+     *     methods={"GET", "POST"} )
+     */
+    public function edit(Request $request, Article $article)
+    {
+        $form = $this->createFormBuilder($article)
+            ->add('title', null, [
+                'label' => 'Titre'
+            ])
+            ->add('content')
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if (($form)->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($article);
+            $em->flush();
+
+            $this->addFlash('success', 'l\'article a bien été modifié');
+
+            return $this->redirectToRoute('app_article_show', [
+                'id' => $article->getId(),
+            ]);
+
+        }
+
+        return $this->render('article/edit.html.twig', [
+        'form' => $form->createView(),
+        'article' => $article,
         ]);
     }
 }
