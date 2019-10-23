@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 use App\Entity\Article;
+use App\Entity\Author;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -65,6 +66,7 @@ class ArticleController extends AbstractController
             'article' => $article,
         ]);
     }
+
     private function persistArticle(Article $article, string $message)
     {
         $em = $this->getDoctrine()->getManager();
@@ -74,5 +76,19 @@ class ArticleController extends AbstractController
         return $this->redirectToRoute('app_article_show', [
             'id' => $article->getId(),
         ]);
+    }
+
+    /**
+     * @Route("/author/{id}")
+     *
+     */
+
+    public function indexByAuthor(Author $author, ArticleRepository $repository)
+    {
+        $articles = $repository->findBy(['writtenBy' => $author]);
+        return $this->render('article/index_by_author.html.twig', [
+            'author' => $author,
+                'articles' => $articles,
+            ]);
     }
 }
