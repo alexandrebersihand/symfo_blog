@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -32,6 +33,7 @@ class Article
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\Length(min=10)
      */
     private $content;
 
@@ -92,5 +94,14 @@ class Article
         $this->writtenBy = $writtenBy;
 
         return $this;
+    }
+
+    /**
+     * @Assert\IsTrue(message="Il faut plus de contenu que la longueur du titre")
+     */
+    public function isContentLongerThanTitle(): bool
+    {
+        return mb_strlen($this->content) > mb_strlen($this->title);
+
     }
 }
