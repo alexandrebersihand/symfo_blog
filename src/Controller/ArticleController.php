@@ -47,7 +47,7 @@ class ArticleController extends AbstractController
     }
     /**
      * @Route(
-     *     "/{id}/edit",
+     *     "/{slug}/edit",
      *     requirements={"id": "\d+"},
      *     methods={"GET", "POST"}
      * )
