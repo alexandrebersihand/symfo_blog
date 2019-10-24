@@ -3,6 +3,9 @@
 {% block title %}Nouvel article{% endblock %}
 
 {% block body %}
+    {% if is_granted('ROLE_ADMIN') %}
+    <p>Vous êtes administrateur !</p>
+    {% endif %}
     <h1>Nouvel article</h1>
     {{ include('article/_form.html.twig', {action:'Créer'}) }}
 {% endblock %}
