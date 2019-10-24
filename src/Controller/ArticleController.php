@@ -31,7 +31,7 @@ class ArticleController extends AbstractController
     }
     /**
      * @Route("/new", methods={"GET", "POST"})
-     * @IsGranted("ROLE_AUHTOR")
+     * @IsGranted("ROLE_AUTHOR")
      */
     public function new(Request $request)
     {
