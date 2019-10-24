@@ -57,6 +57,7 @@ class ArticleController extends AbstractController
      *     requirements={"id": "\d+"},
      *     methods={"GET", "POST"}
      * )
+     * @IsGranted("ARTICLE_EDIT", subject="article")
      */
     public function edit(Request $request, Article $article)
     {
